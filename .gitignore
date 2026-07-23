@@ -1,0 +1,53 @@
+.env
+
+data/processed/
+*.pyc
+venv/
+.venv/
+*.log
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Environment Variables
+.env
+.env.*
+
+# Data Files
+*.json
+*.csv
+
+# Vector Database
+chroma/
+*.sqlite3
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Test Cache
+.pytest_cache/
+.coverage
