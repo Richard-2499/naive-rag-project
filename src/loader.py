@@ -1,7 +1,31 @@
 from llama_index.core import SimpleDirectoryReader
 from pathlib import Path
+
+from llama_index.core.schema import Document
+
 from src.logger import get_logger
 logger = get_logger(__name__)
+
+def _clean_text(text: str) -> str:
+    """
+    清理 PDF 抽取产生的无关内容
+    """
+    lines = text.splitlines()
+    cleaned_lines = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        if "mp.weixin.qq.com" in line:
+            continue
+        if "好东西都是总结出来的" in line:
+            continue
+        if "上海Original 01fish" in line:
+            continue
+        if "2w 字" in line:
+            continue
+        cleaned_lines.append(line)
+    return "\n".join(cleaned_lines)
 
 class DocumentLoader:
     """
@@ -11,7 +35,7 @@ class DocumentLoader:
     def __init__(self, data_dir):
         self.data_dir = Path(data_dir)
 
-    def load_documents(self):
+    def load_documents(self) -> list[Document]:
         '''
         加载指定目录下所有文档
         Returns:
@@ -24,7 +48,7 @@ class DocumentLoader:
             recursive = False,
         ).load_data()
         for doc in documents:
-            cleaned_text = self._clean_text(doc.text)
+            cleaned_text = _clean_text(doc.text)
             doc.set_content(cleaned_text)
 
         # print("doc type: ",type(documents))  #  doc type:  <class 'list'>
@@ -35,25 +59,4 @@ class DocumentLoader:
         # logger.info(f"📄 文档列表：{documents}")
         logger.info(f"📄 总字符数：{sum(len(doc.text) for doc in documents)}")
         return documents
-
-    def _clean_text(self, text: str) -> str:
-        """
-        清理 PDF 抽取产生的无关内容
-        """
-        lines = text.splitlines()
-        cleaned_lines = []
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
-            if "mp.weixin.qq.com" in line:
-                continue
-            if "好东西都是总结出来的" in line:
-                continue
-            if "上海Original 01fish" in line:
-                continue
-            if "2w 字" in line:
-                continue
-            cleaned_lines.append(line)
-        return "\n".join(cleaned_lines)
 

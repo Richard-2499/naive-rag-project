@@ -22,3 +22,12 @@ paths:
   vector_store: "results/vector_store.json" # generate it by using `python src/vector_store.py` if not existed
   raw_data: "data/raw"
   validation_data: "data/validation"
+  bm25_store: "results/bm25_store.json" 
+
+
+retrieval:
+  type: hybrid
+  hybrid:
+    alpha: 0.5
+    candidate_k: 20
+    top_k: 5

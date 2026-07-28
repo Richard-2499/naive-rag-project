@@ -1,8 +1,8 @@
 from src.bge_embedder import BGEEmbedder
 from src.draft.config import QWEN_EMBEDDING_MODEL, DASHSCOPE_API_KEY, VECTOR_STORE_FILE
 from src.generation import LLMClient, Generation
-from src.retriever import Retriever
-from src.vector_store import VectorStore
+from src.retriever.vector_retriever import Retriever
+from src.store.vector_store import VectorStore
 
 vecstore = VectorStore(VECTOR_STORE_FILE)
 embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)

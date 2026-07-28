@@ -2,7 +2,7 @@
 test_env.py --- 测试 API key 和 模型
 
 '''
-from src.draft.config import Config
+# from src.draft.config import Config
 
 # print(key[:30])
 # client = OpenAI(
@@ -82,10 +82,30 @@ from src.draft.config import Config
 # print("====== LLM 模型回答 ======")
 # print(llm_resp.choices[0].message.content)
 
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
+#
+# model = SentenceTransformer('BAAI/bge-small-zh')
+# vector = model.encode("测试文本")
+#
+# print(f"向量维度: {len(vector)}")
+# print(f"前5个值: {vector[:5]}")
 
-model = SentenceTransformer('BAAI/bge-small-zh')
-vector = model.encode("测试文本")
 
-print(f"向量维度: {len(vector)}")
-print(f"前5个值: {vector[:5]}")
+# vectors = {"a": "aaa", "b": "bbb", "c": "ccc"}
+# # for i in vectors:
+# #     # print(i)
+# #     print(vectors[i])
+# bb = [vectors[i] for i in vectors]
+# print(bb)
+
+# vector = {"a": [0.1, 0.2, 0.3], "b": [0.4, 0.5, 0.6], "c": [0.7, 0.8, 0.9]}
+# dim1 = len(vector)
+# dim2 = len(next(iter(vector.values())))
+# print(dim1, dim2)
+
+scores = [0.22, 0.33, 0.44, 0.62, 0.93, 0.81, 0.12, 0.59, 0.73, 0.06]
+
+sorted_scores = sorted(scores, key=lambda x: x, reverse=True)
+print(sorted_scores)
+sorted_indices = sorted(range(len(scores)), key=lambda k: scores[k], reverse=True)
+print(sorted_indices)

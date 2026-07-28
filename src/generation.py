@@ -1,5 +1,9 @@
 from llama_index.core.schema import TextNode
 from openai import OpenAI
+
+from src.schema.retrieval_result import RetrievalResult
+
+
 class LLMClient:
     def __init__(self, base_url: str, api_key: str, model: str = "deepseek-v4-flash"):
         self._base_url = base_url
@@ -34,7 +38,7 @@ class Generation:
     def __init__(self, llm: LLMClient):
         self._llm = llm
 
-    def _build_context(self, nodes: list[TextNode]) -> str:
+    def _build_context(self, nodes: list[RetrievalResult]) -> str:
         # 把多个 textnode 对应的text 进行编号，然后再做拼接
         # contexts = "\n".join([f"【文档{i}】{text.text}" for i, text in enumerate(nodes)])
 
@@ -72,7 +76,7 @@ class Generation:
         """
         return prompt
 
-    def generate(self, query: str, nodes: list[TextNode]) -> str:
+    def generate(self, query: str, nodes: list[RetrievalResult]) -> str:
         """
         生成答案
         Args:

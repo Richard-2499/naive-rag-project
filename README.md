@@ -23,6 +23,27 @@
 
 ---
 
+## 版本迭代
+```
+    v1.0
+    基础 RAG Pipeline
+        |
+        |
+    v1.2
+    + Hybrid Search
+    + Reranker
+        |
+        |
+    v1.3
+    + Evaluation Dataset
+    + RAGAS Metrics
+        |
+        |
+    v2.0
+    Production RAG System
+```
+
+
 # Architecture
 
 ```

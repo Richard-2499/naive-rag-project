@@ -1,12 +1,17 @@
 # src/main.py
 import os
-from pathlib import Path
 from bge_embedder import BGEEmbedder
 from config.config_loader import load_config
-from vector_store import VectorStore
-from retriever import Retriever
+from src.fusion.weighted_fusion import WeightedFusionStrategy
+from src.loader import logger
+from src.retriever.hybrid_retriever import HybridRetriever
+from src.store.bm25_store import BM25Store
+from src.retriever.bm25_retriever import BM25Retriever
+from src.store.vector_store import VectorStore
+from src.retriever.vector_retriever import VectorRetriever
 from generation import Generation, LLMClient
 from rag_pipeline import RAGPipeline
+from src.utils.tokenizer import chinese_tokenizer
 
 
 def main():
@@ -18,33 +23,52 @@ def main():
     vector_store = VectorStore(
         save_path= config["paths"]["vector_store"]
     )
-
+    vector_store.load()
+    logger.info(f"✅ vector 载入完成，数量：{len(vector_store.vectors)}")
+    bm25_store = BM25Store(
+        save_path=config["paths"]["bm25_store"],
+        tokenizer=chinese_tokenizer,
+    )
+    bm25_store.load()
+    logger.info(f"✅ bm25 载入完成，数量：{len(bm25_store.corpus)}")
     # 3. 初始化 Retriever
-    retriever = Retriever(
+    vector_retriever = VectorRetriever(
         embedder=embedder,
         vector_store=vector_store,
+    )
+    bm25_retriever = BM25Retriever(
+        bm25_store=bm25_store,
+        tokenizer=bm25_store.tokenizer,
+    )
+
+    fusion_strategy = WeightedFusionStrategy(
+        bm25_weight=0.7,
+        vector_weight=0.3,
+    )
+    hybrid_retriever = HybridRetriever(
+        bm25_retriever=bm25_retriever,
+        vector_retriever=vector_retriever,
+        fusion_strategy=fusion_strategy,
     )
 
     # 4. 初始化 LLM
     llm = LLMClient(
-        model="deepseek-v4-flash",
+        model="qwen3.7-max",
         api_key=os.getenv("DASHSCOPE_API_KEY"),
         base_url=config["llm"]["base_url"],
     )
 
     # 5. 初始化 Generation
-    generation = Generation(
-        llm=llm
-    )
+    generation = Generation(llm=llm)
 
     # 6. 组装 RAG Pipeline
     pipeline = RAGPipeline(
-        retriever=retriever,
+        retriever=hybrid_retriever,
         generation=generation,
     )
 
     # 7. 用户问题
-    question = "JIT 的三个层次？"
+    question = "JIT 的三个层次"
 
     answer = pipeline.query(question)
 
