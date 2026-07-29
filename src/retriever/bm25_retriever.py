@@ -25,7 +25,6 @@ class BM25Retriever:
                 text = chunk.text,
                 metadata = chunk.metadata,
                 source = "bm25",
-                vector_score = None,
                 bm25_score = score
             )
             retrieval_results.append(result)

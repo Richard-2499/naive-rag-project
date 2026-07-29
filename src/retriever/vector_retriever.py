@@ -37,9 +37,7 @@ class VectorRetriever:
                     text = node.text,
                     metadata= node.metadata,
                     source = "vector",
-                    vector_score = score,
-                    bm25_score = 0.0
-
+                    vector_score = score
                 )
             )
         return retrieval_results

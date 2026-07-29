@@ -18,7 +18,6 @@ class WeightedFusionStrategy(FusionStrategy):
         bm25_results = self._normalize_scores(bm25_results)
 
         merged_results = self._merged_results(bm25_results, vector_results)
-
         final_results = []
 
         for result in merged_results.values():
@@ -27,7 +26,37 @@ class WeightedFusionStrategy(FusionStrategy):
             final_results.append(result) # ?
 
         sorted_results = sorted(final_results, key=lambda x: x.score, reverse=True)
+        print("fusion result 0 score: ", final_results[0].score)
+        print("fusion result 0 raw_score: ", final_results[0].raw_score)
+        print("fusion result 0 bm25_score: ", final_results[0].bm25_score)
+        print("fusion result 0 vector_score: ", final_results[0].vector_score)
+        print("=" * 80)
+        print("fusion result 0 : \n", final_results[0])
+        exit ()
         return sorted_results[:top_k]
+
+    def _normalize_scores(self, results: list[RetrievalResult]) -> list[RetrievalResult]:
+
+        if not results:
+            return results
+
+        scores = [result.score for result in results]
+
+        min_score = min(scores)
+        max_score = max(scores)
+
+        # 如果所有分数相同，下面的归一化公式就会出现 0/0 的错误
+        if min_score == max_score:
+            for result in results:
+                result.raw_score = result.score
+                result.score = 1.0
+            return results
+
+        for result in results:
+            result.raw_score = result.score
+            result.score = (result.score - min_score) / (max_score - min_score)
+
+        return results
 
     def _merged_results(
         self,
@@ -47,24 +76,3 @@ class WeightedFusionStrategy(FusionStrategy):
                 result.bm25_score = result.score
                 merged_results[result.chunk_id] = result
         return merged_results
-
-    def _normalize_scores(self, results: list[RetrievalResult]) -> list[RetrievalResult]:
-
-        if not results:
-            return results
-
-        scores = [result.score for result in results]
-
-        min_score = min(scores)
-        max_score = max(scores)
-
-        # 如果所有分数相同，下面的归一化公式就会出现 0/0 的错误
-        if min_score == max_score:
-            for result in results:
-                result.score = 1.0
-            return results
-
-        for result in results:
-            result.score = (result.score - min_score) / (max_score - min_score)
-
-        return results

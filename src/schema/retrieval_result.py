@@ -8,9 +8,10 @@ class RetrievalResult:
     向量检索结果
     """
     chunk_id: str
-    score: float
     text: str
     metadata: dict
     source: str
+    score: float
+    raw_score: Optional[float] = None
     bm25_score: Optional[float] = None
     vector_score: Optional[float] = None
