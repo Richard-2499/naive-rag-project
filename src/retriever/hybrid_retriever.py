@@ -11,7 +11,7 @@ class HybridRetriever:
         self._fusion_strategy = fusion_strategy
         self._candidate_k = candidate_k
 
-    def retrieve(self, query: str, top_k: int = 5) -> list[RetrievalResult]:
+    def retrieve(self, query: str, top_k: int) -> list[RetrievalResult]:
         # 1. vector search
         vector_results = self._vector_retriever.retrieve(query, self._candidate_k)
         # 2. bm25 search

@@ -20,9 +20,13 @@ llm:
 
 paths:
   vector_store: "results/vector_store.json" # generate it by using `python src/vector_store.py` if not existed
+  bm25_store: "results/bm25_store.json"
   raw_data: "data/raw"
-  validation_data: "data/validation"
-  bm25_store: "results/bm25_store.json" 
+  evaluation_data: "data/evaluation/retrieval_eval.json"
+  preview_split: "results/preview_split"
+  chunks_store: "results/chunks_store.json"
+  evaluation_results: "results/evaluation"
+
 
 
 retrieval:

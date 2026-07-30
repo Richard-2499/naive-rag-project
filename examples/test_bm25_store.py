@@ -11,7 +11,8 @@ bm25_store = BM25Store(
     save_path=config["paths"]["bm25_store"],
     tokenizer=chinese_tokenizer,
 )
-docs = DocumentLoader(config["paths"]["raw_data"]).load_documents()
-
-nodes = Splitter(config["splitter"]["chunk_size"], config["splitter"]["chunk_overlap"]).split_documents(docs)
+# docs = DocumentLoader(config["paths"]["raw_data"]).load_documents()
+#
+# nodes = Splitter(config["splitter"]["chunk_size"], config["splitter"]["chunk_overlap"]).split_documents(docs)
+nodes = Splitter.load_nodes_from_file(config["paths"]["chunks_store"])
 bm25_store.save(nodes)

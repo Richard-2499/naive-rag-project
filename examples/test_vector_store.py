@@ -7,10 +7,12 @@ config = load_config()
 from src.bge_embedder import BGEEmbedder
 from src.splitter import Splitter
 from src.store.vector_store import VectorStore
-file_path = config["paths"]["raw_data"]
-docs = DocumentLoader(file_path).load_documents()
+# file_path = config["paths"]["raw_data"]
+# docs = DocumentLoader(file_path).load_documents()
 embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)
-nodes = Splitter(config["splitter"]["chunk_size"], config["splitter"]["chunk_overlap"]).split_documents(docs)
+# nodes = Splitter(config["splitter"]["chunk_size"], config["splitter"]["chunk_overlap"]).split_documents(docs)
+nodes = Splitter.load_nodes_from_file(config["paths"]["chunks_store"])
+
 texts = [node.text for node in nodes]
 embedding_data = embedder.embed(texts)
 new_vector_store = VectorStore(config["paths"]["vector_store"])

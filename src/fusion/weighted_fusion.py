@@ -26,13 +26,12 @@ class WeightedFusionStrategy(FusionStrategy):
             final_results.append(result) # ?
 
         sorted_results = sorted(final_results, key=lambda x: x.score, reverse=True)
-        print("fusion result 0 score: ", final_results[0].score)
-        print("fusion result 0 raw_score: ", final_results[0].raw_score)
-        print("fusion result 0 bm25_score: ", final_results[0].bm25_score)
-        print("fusion result 0 vector_score: ", final_results[0].vector_score)
-        print("=" * 80)
-        print("fusion result 0 : \n", final_results[0])
-        exit ()
+        # print("fusion result 0 score: ", final_results[0].score)
+        # print("fusion result 0 raw_score: ", final_results[0].raw_score)
+        # print("fusion result 0 bm25_score: ", final_results[0].bm25_score)
+        # print("fusion result 0 vector_score: ", final_results[0].vector_score)
+        # print("=" * 80)
+        # print("fusion result 0 : \n", final_results[0])
         return sorted_results[:top_k]
 
     def _normalize_scores(self, results: list[RetrievalResult]) -> list[RetrievalResult]:

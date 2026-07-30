@@ -34,7 +34,7 @@ def main():
     # 3. 初始化 Retriever
     vector_retriever = VectorRetriever(
         embedder=embedder,
-        vector_store=vector_store,
+        vector_store=vector_store
     )
     bm25_retriever = BM25Retriever(
         bm25_store=bm25_store,
@@ -49,6 +49,7 @@ def main():
         bm25_retriever=bm25_retriever,
         vector_retriever=vector_retriever,
         fusion_strategy=fusion_strategy,
+        candidate_k=30
     )
 
     # 4. 初始化 LLM
@@ -65,10 +66,11 @@ def main():
     pipeline = RAGPipeline(
         retriever=hybrid_retriever,
         generation=generation,
+        top_k=10
     )
 
     # 7. 用户问题
-    question = "JIT 的三个层次"
+    question = "vxlan 中数据包转发流程"
 
     answer = pipeline.query(question)
 

@@ -1,3 +1,5 @@
+import json
+
 from llama_index.core import Document
 from llama_index.core.node_parser import SimpleNodeParser
 from pathlib import Path
@@ -32,7 +34,8 @@ class Splitter:
         # logger.info(documents[0].metadata)
 
         nodes = self._parser.get_nodes_from_documents(documents) # list[TextNode]
-        # logger.info(type(nodes[0]))
+        logger.info(type(nodes)) # <class 'list'>
+        logger.info(type(nodes[1])) # <class 'llama_index.core.schema.TextNode'>
         # logger.info(vars(nodes[0]).keys())
         '''
         dict_keys(['id_', 'embedding', 'metadata', 'excluded_embed_metadata_keys', 'excluded_llm_metadata_keys', 'relationships', 
@@ -45,7 +48,8 @@ class Splitter:
         logger.info(f"✅ 文档切分完成，共 {len(nodes)} 个节点，平均长度 {avg_chars:.2f} 个字符")
         return nodes
 
-    def save_nodes_to_file(self, nodes: list[TextNode], output_path: Path):
+    @staticmethod
+    def save_nodes_to_file(nodes: list[TextNode], output_path: Path):
         """
         查看文档切割是否与预期相符
         Args:
@@ -53,16 +57,46 @@ class Splitter:
         Returns:
             None
         """
+        data = []
+        for node in nodes:
+            data.append({
+                "id": node.id_,
+                "text": node.text,
+                "metadata": node.metadata,
+            })
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         with output_path.open("w", encoding="utf-8") as f:
-            f.write(f"切分预览 - chunk_size = {self._chunk_size}, overlap = {self._chunk_overlap}")
-            f.write("\n\n"+"=" * 80 + "\n\n")
+            json.dump(data, f, ensure_ascii=False, indent=2)
 
-            for i, node in enumerate(nodes, 1):
-                f.write(f"节点 {i} 长度 {len(node.text)} 个字符:\n")
-                f.write(node.text[:1000])
-                if len(node.text)>1000:
-                    f.write("...")
-                f.write("\n\n" + "-" * 80 + "\n\n")
+        # with output_path.open("w", encoding="utf-8") as f:
+        #     f.write(f"切分预览 - chunk_size = {self._chunk_size}, overlap = {self._chunk_overlap}")
+        #     f.write("\n\n"+"=" * 80 + "\n\n")
+        #
+        #     for i, node in enumerate(nodes, 1):
+        #         f.write(f"节点 {i} 长度 {len(node.text)} 个字符:\n")
+        #         f.write(node.text[:1000])
+        #         if len(node.text)>1000:
+        #             f.write("...")
+        #         f.write("\n\n" + "-" * 80 + "\n\n")
         logger.info(f"✅ 节点保存完成，保存路径：{output_path}")
 
-
+    @staticmethod
+    def load_nodes_from_file(input_path: Path) -> list[TextNode]:
+        """
+        加载保存的节点
+        Args:
+            input_path: 节点保存路径
+        Returns:
+            list[TextNode]
+        """
+        with input_path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        nodes = []
+        for item in data:
+            node = TextNode(
+                text=item["text"],
+                metadata=item["metadata"],
+                id_=item["id"],
+            )
+            nodes.append(node)
+        return nodes

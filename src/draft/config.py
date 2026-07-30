@@ -27,10 +27,10 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
-VALIDATION_DIR = DATA_DIR / "validation"
+VALIDATION_DIR = DATA_DIR / "evaluation"
 RESULTS_DIR = PROJECT_ROOT / "results"
 VECTOR_STORE_FILE = RESULTS_DIR / "vector_store.json"
-QUESTION_FILE = VALIDATION_DIR / "validation_questions.txt"
+QUESTION_FILE = VALIDATION_DIR / "evaluation_questions.txt"
 
 # ==============================================================================
 # API Keys
