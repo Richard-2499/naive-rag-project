@@ -20,7 +20,7 @@ def main():
         tokenizer=chinese_tokenizer,
     )
 
-    embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)
+    embedder = BGEEmbedder(config["embedding"]["model"], nomalize=True)
     logger.info("加载chunks_store file...")
     nodes = Splitter.load_nodes_from_file(config["paths"]["chunks_store"])
     logger.info(f"chunks_store file loaded, num: {len(nodes)}")

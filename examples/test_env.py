@@ -103,9 +103,42 @@ test_env.py --- 测试 API key 和 模型
 # dim2 = len(next(iter(vector.values())))
 # print(dim1, dim2)
 
-scores = [0.22, 0.33, 0.44, 0.62, 0.93, 0.81, 0.12, 0.59, 0.73, 0.06]
+# scores = [0.22, 0.33, 0.44, 0.62, 0.93, 0.81, 0.12, 0.59, 0.73, 0.06]
+#
+# sorted_scores = sorted(scores, key=lambda x: x, reverse=True)
+# print(sorted_scores)
+# sorted_indices = sorted(range(len(scores)), key=lambda k: scores[k], reverse=True)
+# print(sorted_indices)
 
-sorted_scores = sorted(scores, key=lambda x: x, reverse=True)
-print(sorted_scores)
-sorted_indices = sorted(range(len(scores)), key=lambda k: scores[k], reverse=True)
-print(sorted_indices)
+#20260731
+#
+# zh = 534
+# jh = 397
+# sb = 8013
+# print(zh + jh + sb)
+#
+#
+# zhxj = 100
+# msxj = 3561 + 400
+# jhxj = 424
+# ghxj = 3073
+# print(zhxj + msxj + jhxj + ghxj)
+
+
+
+dd01 = {
+            "91ad3789-d2aa-49ec-904d-f49b86c6ee92": 3,
+            "c3f606c6-5e4f-4bfb-9df6-2008ec378a09": 3,
+            "7a5c59fb-3183-49c8-ae20-eb70a76290b2": 3,
+            "ba54be23-43c6-44ec-a130-f289fafe588a": 3,
+            "ea504aca-a925-4038-92e0-7db526e89323": 3,
+            "925798af-9976-459f-805b-f49feddee535": 2,
+            "a50a10e3-969a-48bb-856a-56c5eddf0178": 2,
+            "4b0a019e-9b2c-4be9-baf0-6a7ba22d6837": 2,
+            "fd52e24e-b69f-4105-b3d4-521df9cd4e43": 2,
+            "29ea23c7-f149-42da-9050-4ac86c255ebc": 1,
+            "ab5cb2b8-b999-4ac8-9708-34d8ea8a8097": 1
+        }
+ss = [i for i, _ in dd01.items()]
+
+print(ss)

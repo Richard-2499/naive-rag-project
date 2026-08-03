@@ -6,13 +6,13 @@ from src.store.vector_store import VectorStore
 
 from config.config_loader import load_config
 from src.retriever.bm25_retriever import BM25Retriever
-from src.scripts.common import run_evaluation
+from src.evaluation.retriever.retriever_common import run_evaluation
 from src.store.bm25_store import BM25Store
 from src.utils.tokenizer import chinese_tokenizer
 
 config = load_config()
 def main() -> None:
-    embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)
+    embedder = BGEEmbedder(config["embedding"]["model"], nomalize=True)
 
     vector_store = VectorStore(config["paths"]["vector_store"])
     vector_store.load()

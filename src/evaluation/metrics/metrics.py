@@ -12,8 +12,9 @@ MRR：判断 第一个正确答案在什么位置
 Precision@K: 判断 是否查准（准确率）
 NDCG@K: 判断 排序质量如何
 """
+import math
 
-class RetrievalMetrics:
+class Metrics:
 
     @staticmethod
     def recall_at_k(retrieved_ids:  list[str], relevant_ids: list[str], top_k: int = 5) -> float:
@@ -23,7 +24,7 @@ class RetrievalMetrics:
         Args:
             retrieved_ids: 检索系统返回的文档 ID 列表 （按相关性从高到底排序）
             relevant_ids: 真正相关的文档 ID 列表（ground truth）
-            k: 只考虑前 K 个检索结果
+            top_k: 只考虑前 K 个检索结果
         Returns:
             recall@k: 前 K 个结果中相关文档数 / 所有相关文档数
                       范围 [0-1]，值越大表示召回的越全
@@ -70,3 +71,31 @@ class RetrievalMetrics:
                 return 1 / index
         # 遍历完所有结果都没找到相关文档
         return 0.0
+
+    @staticmethod
+    def dcg(relevance_scores: list[int]) -> float:
+        score = 0.0
+        for index, relevance in enumerate(relevance_scores, start=1):
+            score += (2 ** relevance - 1) / math.log2(index+1)
+        return score
+
+    @staticmethod
+    def ndcg_at_k(reranked_chunk_ids: list[str], ground_truth: dict[str, int], top_k: int) -> float:
+        # 获取 dataset 文档中 chunk_id对应的分数
+        reranked_scores = [ground_truth.get(chunk_id, 0) for chunk_id in reranked_chunk_ids[:top_k]]
+        # 计算 实际排序 DCG
+        dcg_score = Metrics.dcg(reranked_scores)
+
+        # 获取理想排序结果
+        ideal_scores = sorted(ground_truth.values(), reverse=True)
+
+        # 计算理想配许 IDCG
+        idcg_score= Metrics.dcg(ideal_scores[:top_k])
+
+        # 防止没有相关文档导致除零
+        if idcg_score == 0:
+            return 0.0
+
+        # 返回归一化NDCG
+        return dcg_score / idcg_score
+

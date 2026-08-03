@@ -1,6 +1,6 @@
 import logging
 
-def get_logger(name: str) -> logging.Logger:
+def get_logger(name: str, level: int = logging.INFO) -> logging.Logger:
     logger = logging.getLogger(name)
 
     if not logger.handlers:
@@ -13,6 +13,9 @@ def get_logger(name: str) -> logging.Logger:
         handler.setFormatter(formatter)
         logger.addHandler(handler)
 
-        logger.setLevel(logging.INFO)
+        logger.setLevel(level)
 
     return logger
+
+def get_log_level(level: str):
+    return getattr(logging, level.upper())

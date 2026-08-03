@@ -8,10 +8,6 @@ splitter:
   chunk_overlap: 128
 
 
-retriever:
-  similarity_top_k: 3
-
-
 llm:
   model: deepseek-v4-flash
   base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
@@ -22,16 +18,25 @@ paths:
   vector_store: "results/vector_store.json" # generate it by using `python src/vector_store.py` if not existed
   bm25_store: "results/bm25_store.json"
   raw_data: "data/raw"
-  evaluation_data: "data/evaluation/retrieval_eval.json"
+  retriever_eval_dataset: "data/evaluation/retrieval_eval.json"
   preview_split: "results/preview_split"
   chunks_store: "results/chunks_store.json"
   evaluation_results: "results/evaluation"
-
+  reranker_eval_dataset: "data/evaluation/reranker_eval.json"
 
 
 retrieval:
   type: hybrid
   hybrid:
     alpha: 0.5
-    candidate_k: 20
+    candidate_k: 30
     top_k: 5
+
+
+reranker:
+  enabled: true
+  model: "D:/workspace/models/huggingface/bge-reranker-base"
+
+
+logging:
+  level: debug

@@ -13,19 +13,20 @@ import json
 from pathlib import Path
 
 @dataclass
-class EvaluationSample:
+class RetrieverEvalCase:
     query: str
     relevant_chunk_ids: list[str]
 
-class EvaluationDataset:
+class RetrieverEvalDataset:
     def __init__(self, data_path: str):
         self._path = Path(data_path)
 
-    def load(self) -> list[EvaluationSample]:
+    def load(self) -> list[RetrieverEvalCase]:
         with self._path.open("r", encoding="utf-8") as f:
             data = json.load(f)
         return [
-            EvaluationSample(
-            query = item["query"], relevant_chunk_ids = item["relevant_chunk_ids"]
+            RetrieverEvalCase(
+                query = item["query"],
+                relevant_chunk_ids = item["relevant_chunk_ids"]
             ) for item in data
         ]

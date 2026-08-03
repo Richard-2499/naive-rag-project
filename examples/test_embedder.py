@@ -17,8 +17,8 @@ split_docs = Splitter(CHUNK_SIZE, CHUNK_OVERLAP).split_documents(docs)
 texts = []
 for node in split_docs:
     texts.append(node.text)
-# embeddings = BGEEmbedder("BAAI/bge-small-zh", nomalize=True).embed([node.text for node in split_docs])
-embeddings = BGEEmbedder("BAAI/bge-small-zh", nomalize=True).embed(texts)
+# embeddings = BGEEmbedder(config["embedding"]["model"], nomalize=True).embed([node.text for node in split_docs])
+embeddings = BGEEmbedder(config["embedding"]["model"], nomalize=True).embed(texts)
 
 print(len(embeddings))
 print("dimension:", len(embeddings[0]))

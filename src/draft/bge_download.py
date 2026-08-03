@@ -5,6 +5,8 @@ download_bge_model.py
 """
 import os
 
+from huggingface_hub import snapshot_download
+
 from src.logger import get_logger
 logger = get_logger(__name__)
 # ============================================================
@@ -12,7 +14,7 @@ logger = get_logger(__name__)
 # ============================================================
 # 在这里指定你想存放模型的绝对路径
 # 示例：Windows 用正斜杠或双反斜杠
-MODEL_DIR = "D:/workspace/models/huggingface"  # ← 改成你要存放的目录
+MODEL_DIR = "D:/workspace/models/huggingface/bge-reranker-base"  # ← 改成你要存放的目录
 
 # ============================================================
 # 第二步：设置环境变量（让 huggingface 把模型下载到指定位置）
@@ -27,14 +29,15 @@ os.environ['HUGGINGFACE_HUB_CACHE'] = os.path.join(MODEL_DIR, 'hub')
 # ============================================================
 # 第三步：下载模型
 # ============================================================
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 
 # 需要下载的模型列表
 # - "BAAI/bge-small-zh"  : 轻量版，384维，推荐（约400MB）
 # - "BAAI/bge-base-zh"   : 标准版，768维（约1.1GB）
 # - "BAAI/bge-large-zh"  : 大模型，1024维（约1.3GB）
-MODEL_NAME = "BAAI/bge-large-zh"  # ← 想换模型就改这里
+# MODEL_NAME = "BAAI/bge-small-zh"  # ← 想换模型就改这里
 
+MODEL_NAME = "BAAI/bge-reranker-base"
 
 def download_model():
     logger.info("=" * 60)
@@ -43,7 +46,6 @@ def download_model():
     logger.info(f"   存放目录: {MODEL_DIR}")
     logger.info(f"   模型名称: {MODEL_NAME}")
     logger.info("=" * 60)
-    logger.info()
 
     try:
         logger.info("🔨 开始下载模型，请耐心等待...")
@@ -51,23 +53,31 @@ def download_model():
         print()
 
         # 这行代码会触发下载，并自动保存到上面指定的目录
-        model = SentenceTransformer(MODEL_NAME)
+        # model = SentenceTransformer(MODEL_NAME)  # 下载 embedding 模型
+        # 下载 reranker 模型
+        snapshot_download(
+            repo_id = MODEL_NAME,
+            local_dir = MODEL_DIR,
+            local_dir_use_symlinks = False,
+            resume_download = True,
+        )
+
 
         # 下载完成后，做一次简单推理验证
-        logger.info()
-        logger.info("🧪 验证模型是否可用...")
-        test_vector = model.encode("测试文本")
-        logger.info(f"   ✅ 测试成功！向量维度: {len(test_vector)}")
+
+        # logger.info("🧪 验证模型是否可用...")
+        # test_vector = model.encode("测试文本")
+        # logger.info(f"   ✅ 测试成功！向量维度: {len(test_vector)}")
 
         # 显示模型保存位置
-        logger.info()
+
         logger.info("=" * 60)
         logger.info("✅ 模型下载完成！")
         logger.info("=" * 60)
         logger.info(f"   模型名称: {MODEL_NAME}")
         logger.info(f"   存放位置: {os.path.join(MODEL_DIR, 'hub')}")
-        logger.info(f"   向量维度: {len(test_vector)}")
-        logger.info()
+        # logger.info(f"   向量维度: {len(test_vector)}")
+
         logger.info("📝 接下来运行 embedder_bge.py 即可直接加载此模型")
         logger.info("=" * 60)
 

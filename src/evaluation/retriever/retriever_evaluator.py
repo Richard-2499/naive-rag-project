@@ -8,9 +8,7 @@
 import logging
 from typing import Any
 
-from src.evaluation.dataset import EvaluationSample
-
-
+from src.evaluation.dataset.retriever_dataset import RetrieverEvalCase
 
 class RetrievalEvaluator:
     """
@@ -23,7 +21,7 @@ class RetrievalEvaluator:
 
     def evaluate(
             self,
-            dataset: list[EvaluationSample],
+            dataset: list[RetrieverEvalCase],
             top_k: int = 15,
             verbose: bool = True
     ) -> list[dict[str, Any]]:

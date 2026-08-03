@@ -9,7 +9,7 @@ from src.splitter import Splitter
 from src.store.vector_store import VectorStore
 # file_path = config["paths"]["raw_data"]
 # docs = DocumentLoader(file_path).load_documents()
-embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)
+embedder = BGEEmbedder(config["embedding"]["model"], nomalize=True)
 # nodes = Splitter(config["splitter"]["chunk_size"], config["splitter"]["chunk_overlap"]).split_documents(docs)
 nodes = Splitter.load_nodes_from_file(config["paths"]["chunks_store"])
 

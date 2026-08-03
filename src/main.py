@@ -1,9 +1,14 @@
 # src/main.py
+import logging
 import os
+import time
+
 from bge_embedder import BGEEmbedder
 from config.config_loader import load_config
 from src.fusion.weighted_fusion import WeightedFusionStrategy
-from src.loader import logger
+from src.logger import get_logger
+logger = get_logger(__name__, logging.INFO)
+from src.reranker.bge_reranker import BGEReranker
 from src.retriever.hybrid_retriever import HybridRetriever
 from src.store.bm25_store import BM25Store
 from src.retriever.bm25_retriever import BM25Retriever
@@ -17,7 +22,7 @@ from src.utils.tokenizer import chinese_tokenizer
 def main():
     config = load_config()
     # 1. 初始化 Embedding
-    embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)
+    embedder = BGEEmbedder(config["embedding"]["model"], nomalize=True)
 
     # 2. 初始化 VectorStore
     vector_store = VectorStore(
@@ -49,9 +54,10 @@ def main():
         bm25_retriever=bm25_retriever,
         vector_retriever=vector_retriever,
         fusion_strategy=fusion_strategy,
-        candidate_k=30
+        candidate_k=config["retrieval"]["hybrid"]["candidate_k"]
     )
 
+    reranker = BGEReranker( model_name = config["reranker"]["model"] )
     # 4. 初始化 LLM
     llm = LLMClient(
         model="qwen3.7-max",
@@ -66,15 +72,20 @@ def main():
     pipeline = RAGPipeline(
         retriever=hybrid_retriever,
         generation=generation,
-        top_k=10
+        reranker = reranker,
     )
 
     # 7. 用户问题
-    question = "vxlan 中数据包转发流程"
+    query = "vxlan 中数据包转发流程"
 
-    answer = pipeline.query(question)
+    answer = pipeline.query(query)
+    time.sleep(3)
 
-    print("\n回答:")
+    logger.info("=" * 80)
+    logger.info("回答:")
+    logger.info("=" * 80)
+
+    time.sleep(3)
     print(answer)
 
 

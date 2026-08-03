@@ -1,12 +1,12 @@
 from src.bge_embedder import BGEEmbedder
 from src.retriever.vector_retriever import VectorRetriever
-from src.scripts.common import run_evaluation
+from src.evaluation.retriever.retriever_common import run_evaluation
 from src.store.vector_store import VectorStore
 from config.config_loader import load_config
 config = load_config()
 
 def main():
-    embedder = BGEEmbedder("BAAI/bge-small-zh", nomalize=True)
+    embedder = BGEEmbedder(config["embedding"]["model"], nomalize=True)
 
     vector_store = VectorStore(config["paths"]["vector_store"])
     vector_store.load()

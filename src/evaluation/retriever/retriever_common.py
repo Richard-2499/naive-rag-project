@@ -1,27 +1,27 @@
 import json
 from pathlib import Path
 
-from src.evaluation.dataset import EvaluationDataset, EvaluationSample
+from src.evaluation.dataset.retriever_dataset import RetrieverEvalDataset, EvaluationCase
 from config.config_loader import load_config
-from src.evaluation.evaluator import RetrievalEvaluator
-from src.evaluation.metrics import RetrievalMetrics
+from src.evaluation.retriever.retriever_evaluator import RetrievalEvaluator
+from src.evaluation.metrics.metrics import Metrics
 
 config = load_config()
-dataset_path = config["paths"]["evaluation_data"]
+dataset_path = config["paths"]["retriever_eval_dataset"]
 
-def load_dataset() -> list[EvaluationSample]:
+def load_dataset() -> list[EvaluationCase]:
     """
     加载评估数据集
     Returns:
-        EvaluationDataset: 评估数据集
+        RetrieverEvalDataset: 评估数据集
     """
-    return EvaluationDataset(dataset_path).load()
+    return RetrieverEvalDataset(dataset_path).load()
 
 
 def run_evaluation(retriever, output_path: str, top_k: int = 15):
 
     dataset = load_dataset()
-    evaluator = RetrievalEvaluator(retriever = retriever, metrics = RetrievalMetrics())
+    evaluator = RetrievalEvaluator(retriever = retriever, metrics = Metrics())
     results = evaluator.evaluate(dataset = dataset, top_k = top_k)
 
     summary = {
