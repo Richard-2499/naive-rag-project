@@ -5,7 +5,7 @@ from sentence_transformers import CrossEncoder
 
 from config.config_loader import load_config
 from src.reranker.base_reranker import BaseReranker
-from src.schema.retrieval_result import RetrievalResult
+from src.schemas.retrieval_result import RetrievalResult
 
 config = load_config()
 

@@ -22,7 +22,7 @@ env/
 .env.*
 
 # Data Files
-*.json
+#*.json
 *.csv
 
 # Vector Database

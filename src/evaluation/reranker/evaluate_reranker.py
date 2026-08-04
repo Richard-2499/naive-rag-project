@@ -6,7 +6,7 @@ from src.evaluation.dataset.reranker_dataset import RerankerEvalDataset
 from src.evaluation.metrics.metrics import Metrics
 from src.reranker.bge_reranker import BGEReranker
 from src.retriever.hybrid_retriever import HybridRetriever
-from src.schema.retrieval_result import RetrievalResult
+from src.schemas.retrieval_result import RetrievalResult
 
 
 # class RetrievalProtocol(Protocol):

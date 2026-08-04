@@ -1,0 +1,104 @@
+[
+    {
+        "query": "什么是生成树协议？有几种生成树？",
+        "relevant_chunks": {
+          "15e5ab0c-654d-4c3e-acf7-f74a52e183c6": 1,
+          "c8799014-2080-4e40-8d50-6bad6a81d9df": 3,
+          "a50a10e3-969a-48bb-856a-56c5eddf0178": 2,
+          "2414196b-abf9-43c9-8cef-cf19d8e6672e": 1,
+          "91ad3789-d2aa-49ec-904d-f49b86c6ee92": 1
+        }
+    },
+    {
+        "query": "MSTI Configuration Messages字段是什么意思？",
+        "relevant_chunks": {
+            "192d754e-35f0-4ded-8580-4ce84065df3d": 3,
+            "1e910b6d-72ee-47c5-8665-f4644cfda61b": 1,
+            "d776341c-edef-4079-b26d-a22be02fee4e": 1,
+            "8fdb1729-2a54-4669-b0e8-3ff8bb5f99ff": 1
+        }
+    },
+    {
+        "query": "生成树协议是如何防环的？",
+        "relevant_chunks": {
+            "91ad3789-d2aa-49ec-904d-f49b86c6ee92": 3,
+            "c3f606c6-5e4f-4bfb-9df6-2008ec378a09": 3,
+            "7a5c59fb-3183-49c8-ae20-eb70a76290b2": 3,
+            "ba54be23-43c6-44ec-a130-f289fafe588a": 3,
+            "ea504aca-a925-4038-92e0-7db526e89323": 3,
+            "925798af-9976-459f-805b-f49feddee535": 3,
+            "3ef10d7b-22e6-453e-9f68-f18e9b6b19b6": 2,
+            "9af0c91c-a49d-4a94-b9d3-c7dd7ad94c5e": 2
+        }
+    },
+    {
+        "query": "三种生成树的主要区别是什么？",
+        "relevant_chunks": {
+            "91ad3789-d2aa-49ec-904d-f49b86c6ee92": 3,
+            "c3f606c6-5e4f-4bfb-9df6-2008ec378a09": 3,
+            "7a5c59fb-3183-49c8-ae20-eb70a76290b2": 3,
+            "ba54be23-43c6-44ec-a130-f289fafe588a": 3,
+            "ea504aca-a925-4038-92e0-7db526e89323": 3,
+            "925798af-9976-459f-805b-f49feddee535": 2,
+            "a50a10e3-969a-48bb-856a-56c5eddf0178": 2,
+            "4b0a019e-9b2c-4be9-baf0-6a7ba22d6837": 2,
+            "fd52e24e-b69f-4105-b3d4-521df9cd4e43": 2,
+            "29ea23c7-f149-42da-9050-4ac86c255ebc": 1,
+            "ab5cb2b8-b999-4ac8-9708-34d8ea8a8097": 1
+        }
+    },
+    {
+        "query": "MSTP的工作原理及收敛机制？",
+        "relevant_chunks": {
+            "5ec1ab67-9829-40c2-a061-7d555dfaf781": 3,
+            "f7415131-7cf5-4a46-a05d-842a939e699d": 3,
+            "2d6415db-e9e3-4dc3-84a9-fe0fadf5893d": 3,
+            "322c97f5-2d6c-4058-a9b8-f2fc89d3dcb3": 3,
+            "1f300028-497a-4a9a-b71e-e72918602cee": 3,
+            "aa267513-33d2-4b30-b283-e5a1a889d666": 3,
+            "dceac65a-8062-49b4-a681-0f825261c1e5": 2,
+            "5ba6290a-77ed-40cf-96e7-b723e1d8ed5a": 2,
+            "a1611625-9e3b-4f5b-8634-a3459745117c": 3
+        }
+    },
+    {
+        "query": "什么是vxlan？",
+        "relevant_chunks": {
+            "87f97b8b-ce5c-4d3e-99a1-0bba007deaba": 3,
+            "1058504e-ce55-4bbc-a1de-9cfe7bb8a14d": 3,
+            "a003a84a-6671-45c4-8f2c-9d30dc6dba0f": 2,
+            "2d5cedc4-1b12-4c10-ab1f-f997340ad477": 2
+        }
+    },
+    {
+        "query": "vxlan的工作原理？有几种BGP EVPN路由类型？",
+        "relevant_chunks": {
+            "6ee6381c-e96c-4ab1-9c74-5b18fda7af31": 3,
+            "963bc3e4-11fc-4160-8373-fd6377820387": 3,
+            "9842151c-9920-4d23-9558-6a66e344438d": 3,
+            "304b0751-a28c-498a-8749-4d6ed047fa83": 3,
+            "05183b74-d2f2-4604-a53e-eb6a58ea6284": 2,
+            "b7cff451-bf6c-49c3-82d3-5eead2b6c825": 2
+        }
+    },
+    {
+        "query": "VXLAN 配置静态双活场景的操作步骤\n",
+        "relevant_chunks": {
+            "309ade78-c7e3-49c8-a69e-d10aa5a1300c": 3,
+            "55dee345-99fa-469a-8028-3c4d004d1d45": 3,
+            "3d1ad5ff-6fb3-41f4-bd39-600509d84134": 3,
+            "dcab8eb7-4e7c-434f-afaf-5fb0590c3c8e": 3,
+            "4885c55a-ec7e-4dc1-b8bd-c26a9f0f9aed": 3,
+            "eb8d2c5f-09d3-49db-8164-034e410154d5": 3,
+            "3f918646-9e49-4658-bb4e-97538c8a33be": 2,
+            "2de59778-019c-4867-a08f-84a6c018986c": 3
+        }
+    },
+    {
+        "query": "什么是VTEP？",
+        "relevant_chunks": {
+            "2d5cedc4-1b12-4c10-ab1f-f997340ad477": 3,
+            "ed0dafd8-3311-4d23-abe4-40c7d4c4f76b": 1
+        }
+    }
+]

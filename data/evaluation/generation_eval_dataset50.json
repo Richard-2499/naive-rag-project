@@ -1,0 +1,206 @@
+[
+  {
+    "query": "如何配置静态MAC表项？",
+    "ground_truth": "步骤1 执行命令system-view，进入系统视图。步骤2 请选择执行其中一个或多个添加静态MAC表项：执行命令mac-address static mac-address interface-type interface-number vlan vlan-id，添加基于VLAN的静态MAC地址表项。执行命令mac-address static mac-address interface-type interface-number vsi-name [pe-vid pe-vid [ce-vid ce-vid]]，添加基于VSI的静态MAC地址表项。执行命令mac-address static mac-address interface-type interface-number {vlanif-type vlanif-number|vlanif-name} vsi vsi-name命令，为绑定了VLANF接口的VSI配置MAC地址表项。步骤3 执行命令commit，提交配置。"
+  },
+  {
+    "query": "静态黑洞MAC表项有什么作用？",
+    "ground_truth": "配置静态黑洞MAC表项，丢弃目的MAC为特定值的报文，可以防止黑客通过MAC地址攻击网络。为了防止无用的MAC地址表项（例如非法用户的MAC地址表项）占用MAC表，也为了防止黑客通过MAC地址攻击用户设备或网络，可将非信任用户的MAC地址配置为静态黑洞MAC，丢弃目的MAC为这些非信任MAC地址的报文。"
+  },
+  {
+    "query": "如何配置基于VLAN的MAC地址学习限制？",
+    "ground_truth": "步骤1 执行命令system-view，进入系统视图。步骤2 执行命令vlan vlan-id，进入VLAN视图。步骤3 执行命令mac-limit { action { discard | forward } | alarm { disable | enable } | maximum maxValue [ rate interval ] }，配置MAC地址学习限制规则。步骤4 （可选）执行命令mac-limit up-threshold up-threshold down-threshold down-threshold，配置MAC地址数量告警产生和消除的阈值百分比。步骤5 执行命令commit，提交配置。"
+  },
+  {
+    "query": "禁止MAC地址学习功能的应用场景是什么？",
+    "ground_truth": "如图1-3所示，CE上某固定接口与服务器相连，网络管理员为了提高设备的安全性，可以指定该接口只允许某些MAC地址的报文通过。可在该接口上配置该服务器的静态MAC地址，且关闭该接口的MAC地址学习功能，指定动作为丢弃。这样，其他服务器或终端将无法通过该接口通信，增强网络的稳定性和安全性。"
+  },
+  {
+    "query": "什么是以太网子接口？",
+    "ground_truth": "三层以太网子接口该类型接口是在一个主接口上配置出来的多个逻辑上的虚拟接口。这个主接口可以是物理接口（比如三层以太网接口）也可以是逻辑接口，子接口共用主接口的物理层参数，又可以分别配置各自的链路层和网络层参数。用户可以禁用或者激活子接口，这不会对主接口产生影响。但主接口状态的变化会对子接口产生影响，特别是只有主接口处于连通状态时子接口才能正常工作。"
+  },
+  {
+    "query": "以太网接口的双工模式如何配置？",
+    "ground_truth": "步骤1 执行命令system-view，进入系统视图。步骤2 执行命令interface gigabitethernet interface-number，进入指定以太网接口的视图。步骤3 请根据实际情况选择以下配置：执行命令duplex { full | half | auto }，选择以太网接口的工作模式。执行命令negotiation auto，配置以太网接口的工作模式为自动协商模式。步骤4 执行命令commit，提交配置。"
+  },
+  {
+    "query": "Jumbo帧是什么？",
+    "ground_truth": "Jumbo帧是一种厂商标准的超长帧格式，专门为千兆以太网而设计。以太网把数据分割为一定大小的帧的单位来进行传送接收，而每帧数据传输的时候都会引入帧头和帧尾的开销。若能够用一个大的帧完成文件的传输，则会减少很多帧的开销，提高网络的利用率和传输速率。"
+  },
+  {
+    "query": "Eth-Trunk接口有什么优势？",
+    "ground_truth": "Trunk的优势在于：增加带宽Trunk接口的总带宽是各成员接口带宽之和。通过这种方式可以成倍的增加接口带宽。提高可靠性当某个成员接口连接的物理链路出现故障时，流量会切换到其他可用的链路上，从而提高整个Trunk链路的可靠性。负载分担通过Trunk接口可以实现负载分担。Trunk接口将流量分散到不同的链路上，最后到达同一目的地。这样可以避免所有流量都走同一条链路而导致网络拥塞。"
+  },
+  {
+    "query": "手工负载分担模式Eth-Trunk和静态LACP模式有什么区别？",
+    "ground_truth": "手工负载分担模式链路聚合不启用LACP，不会进行判断一个聚合组中的端口是否可以真的被聚合在一起。静态LACP模式链路聚合启用LACP，进行LACP协议来判断在一个聚合组中的端口是否可以真的被聚合在一起。相同点：Trunk的创建与删除以及成员链路的加入与退出都是由手动配置。"
+  },
+  {
+    "query": "M:N备份是什么？",
+    "ground_truth": "静态LACP模式链路聚合是一种利用LACP协议进行参数协商选取活动链路的聚合模式。该模式由LACP协议确定聚合组中的活动和非活动链路，又称为M:N模式，即M条活动链路与N条备份链路的模式。这种模式提供了更高的链路可靠性，并且可以在M条链路中实现不同方式的负载均衡。"
+  },
+  {
+    "query": "E-Trunk是什么？",
+    "ground_truth": "E- Trunk（Enhanced Trunk）是一种实现跨设备链路聚合的机制，能够实现多台设备间的链路聚合，从而把可靠性从单板级提高到了设备级。"
+  },
+  {
+    "query": "GVRP是什么？",
+    "ground_truth": "GVRP（Generic VLAN Registration Protocol）是GARP的一种应用，用于注册和注销VLAN属性。GVRP基于GARP机制，主要用于维护设备动态VLAN属性。通过GVRP协议，一台设备上的VLAN信息会迅速传播到整个交换网。GVRP实现动态分发、注册和传播VLAN属性，从而达到减少网络管理员的手工配置量及保证VLAN配置正确的目的。"
+  },
+  {
+    "query": "二层协议透明传输的目的是什么？",
+    "ground_truth": "二层协议报文透明传输功能提供一种技术确保用户私网的二层协议报文在公网内透明传输。在接入侧收到用户协议报文时，对原始报文的组播目的MAC地址的替换或修改后转发。当报文到达远端后，再转发到用户侧时将报文的组播目的MAC地址进行还原。"
+  },
+  {
+    "query": "VLAN的主要优势有哪些？",
+    "ground_truth": "限制广播域。广播域被限制在一个VLAN内，节省了带宽，提高了网络处理能力。增强局域网的安全性。不同VLAN内的报文在传输时是相互隔离的，即一个VLAN内的用户不能和其它VLAN内的用户直接通信。提高了网络的健壮性。故障被限制在一个VLAN内，本VLAN内的故障不会影响其他VLAN的正常工作。灵活构建虚拟工作组。用VLAN可以划分不同的用户到不同的工作组，同一工作组的用户也不必局限于某一固定的物理范围，网络构建和维护更方便灵活。"
+  },
+  {
+    "query": "VLAN聚合（VLAN Aggregation）解决了什么问题？",
+    "ground_truth": "很多IP地址被子网号、子网定向广播地址、子网缺省网关地址消耗掉，而不能用于VLAN内的主机地址。同时，这种地址分配的约束也降低了编址的灵活性，使许多闲置地址也被浪费掉。为了解决这一问题VLAN Aggregation就应运而生。"
+  },
+  {
+    "query": "QinQ技术解决了什么问题？",
+    "ground_truth": "IEEE 802.1Q中定义的VLAN Tag域只有12个比特，仅能表示4096个VLAN，无法满足城域以太网中标识大量用户的需求，于是QinQ技术应运而生。QinQ最初主要是为拓展VLAN的数量空间而产生的。它通过在原有的802.1Q报文的基础上增加一层802.1Q标签来实现，使得VLAN数量增加到4094×4094个。"
+  },
+  {
+    "query": "QinQ终结子接口是什么？",
+    "ground_truth": "QinQ终结子接口：如果子接口是对带有两层VLAN Tag的报文进行终结，那么该子接口称为QinQ终结子接口。QinQ终结子接口根据终结的VLAN Tag，通常分为以下两种子接口：明确的QinQ终结子接口：两层VLAN Tag都是固定值。模糊的QinQ终结子接口：两层VLAN Tag都是范围值，即：终结的内、外层Tag都为范围值。"
+  },
+  {
+    "query": "终结子接口支持ARP代理的应用场景是什么？",
+    "ground_truth": "终结子接口通常支持一个范围内的VLAN接入同一网段。位于该同一网段的用户属于不同的VLAN，这样在二层就无法实现互通，需要进行三层IP转发。因此终结子接口需要能够支持ARP代理功能。"
+  },
+  {
+    "query": "VLAN Mapping和QinQ Mapping有什么区别？",
+    "ground_truth": "1 to 1 端口收到Tagged帧后，将帧中的一层Tag映射为用户指定的一层Tag。QinQ Mapping映射动作发生在子接口上。QinQ Mapping功能主要用于接入VPLS网络。VLAN Mapping映射动作发生在主接口上。VLAN Mapping功能主要用于通过VLAN转发的二层网络。"
+  },
+  {
+    "query": "EVC模型是什么？",
+    "ground_truth": "以太虚连接EVC（Ethernet Virtual Connection）由城域以太网论坛MEF（Metro Ethernet Forum）提出，定义了统一的二层承载业务模型和配置模型。MEF（Metro-Ethernet Forum）定义了EVC可关联ISP（Internet service provider）网络中两个或以上用户网络接口。在EVC模型中，使用广播桥域BD（Bridge Domain）隔离用户网络。"
+  },
+  {
+    "query": "ERPS是什么？",
+    "ground_truth": "ERPS（Ethernet Ring Protection Switching）是ITU-T定义的一种二层破环协议标准，标准号为ITU-T G.8032/Y1344，因此又称为G.8032。它定义了R-APS（Ring Auto Protection Switching）协议报文和保护倒换机制。如果环网内厂商的设备都支持该协议，则可以实现互通。"
+  },
+  {
+    "query": "RPL owner端口在ERPS中有什么作用？",
+    "ground_truth": "一个ERPS环只有一个RPL owner，由用户配置决定，通过阻塞RPL owner端口来防止ERPS环中产生环路。当RPL owner所在设备收到故障报文得知ERPS环上其他节点或链路故障时，会自动放开RPL owner端口，此端口恢复流量的接收和发送，保证流量不会中断。"
+  },
+  {
+    "query": "MAC-Flapping是如何检测环路的？",
+    "ground_truth": "MAC-Flapping是一种根据MAC地址表项的跳变频率来检测以太环路的方法。当网络中出现环路时，设备的不同接口会反复收到源MAC地址相同的用户报文，MAC地址表项不断发生跳变，MAC-Flapping会检测出来，并认为已经发生环路。"
+  },
+  {
+    "query": "STP的主要作用是什么？",
+    "ground_truth": "STP可阻塞二层网络中的冗余链路，将网络修剪成树状，达到消除环路的目的。在以太网交换网中部署生成树协议后，如果网络中出现环路，生成树协议通过拓扑计算，可实现消除环路和链路备份。"
+  },
+  {
+    "query": "MSTP相比RSTP有什么优势？",
+    "ground_truth": "MSTP在STP基础上进行了改进，实现了网络拓扑快速收敛。但RSTP和STP还存在同一个缺陷：由于局域网内所有的VLAN共享一棵生成树，因此无法在VLAN间实现数据流量的负载均衡，链路被阻塞后将不承载任何流量，造成带宽浪费。MSTP兼容STP和RSTP，既可以快速收敛，又提供了数据转发的多个冗余路径，在数据转发过程中实现VLAN数据的负载均衡。"
+  },
+  {
+    "query": "什么是MST域？",
+    "ground_truth": "MST域是多生成树域（Multiple Spanning Tree Region），由交换网络中的多台设备以及它们之间的网段所构成。同一个MST域的设备具有下列特点：都启动了MSTP。具有相同的域名。具有相同的VLAN到生成树实例映射配置。具有相同的MSTP修订级别配置。"
+  },
+  {
+    "query": "RRPP是什么？",
+    "ground_truth": "快速环网保护协议（Rapid Ring Protection Protocol，以下简称RRPP）是一个专门用于破除以太网数据环路的链路层(二层)协议。运行该协议的设备通过RRPP报文检测网络中是否存在环路，并适时对某些接口进行阻塞以消除环路。RRPP Snooping是将RRPP环路变化通知到VPLS（Virtual Private LAN Service）网络的技术。"
+  },
+  {
+    "query": "BPDU Tunnel的目的是什么？",
+    "ground_truth": "如图1-340所示，用户网络1和用户网络2共同运行MSTP协议，要求用户网络1的BPDU报文能够透传运营商网络到达用户网络2，完成生成树计算。BPDU Tunnel的提出解决了上述问题，通过BPDU Tunnel使得不同用户网络的分支通过运营商网络的BPDU Tunnel透明传输各自的BPDU报文。"
+  },
+  {
+    "query": "VXLAN解决了传统网络的哪些问题？",
+    "ground_truth": "针对虚拟机规模受网络规格限制：VXLAN将虚拟机发出的数据包封装在UDP中，并使用物理网络的IP、MAC地址作为外层头进行封装，对网络只表现为封装后的参数。针对网络隔离能力限制：VXLAN引入了类似VLAN ID的用户标识，称为VXLAN网络标识VNI，由24比特组成，支持多达16M的VXLAN段。针对虚拟机迁移范围受网络架构限制：VXLAN通过采用MAC in UDP封装来延伸二层网络，将以太报文封装在IP报文之上，通过路由在网络中传输。"
+  },
+  {
+    "query": "VXLAN分布式网关有什么特点？",
+    "ground_truth": "VXLAN分布式网关具有如下特点：同一个Leaf节点既可以做VXLAN二层网关，也可以做VXLAN三层网关，部署灵活。Leaf节点只需要学习自身连接服务器的ARP或ND表项，而不必像集中三层网关一样，需要学习所有服务器的ARP或ND表项，解决了集中式三层网关带来的ARP或ND表项瓶颈问题，网络规模扩展能力强。"
+  },
+  {
+    "query": "BD在VXLAN中起什么作用？",
+    "ground_truth": "BD是VXLAN网络中转发数据报文的二层广播域。在VXLAN网络中，将VNI映射到广播域BD，BD成为VXLAN网络转发数据报文的实体。"
+  },
+  {
+    "query": "VXLAN双活场景中的Anycast VTEP地址有什么作用？",
+    "ground_truth": "在数据中心与企业Site互通的场景中，VPN GW（PE1和PE2）与企业Site（CPE）通过VXLAN互联。PE1和PE2对网络侧使用一个虚地址作为NVE接口的地址，即Anycast VTEP地址，这样从CPE侧只感知到一个远端的NVE接口，并与该虚地址建立VXLAN隧道。"
+  },
+  {
+    "query": "NFVI分布式网关解决了什么问题？",
+    "ground_truth": "NFVI（Network Function Virtualization Infrastructure）电信云解决方案是DCI（Data Center Interconnect）+DCN（Data Center Network）的组网方案。其中大量手机业务流量会进入DCN网络并访问DCN网络内的vUGW与vMSE。经过vUGW与vMSE的处理后，这些手机业务流量（可以是IPv4业务流量也可以是IPv6业务流量）会再从DCN网络中转发出去，继续访问Internet中的目的设备，而Internet中的目的设备发往手机的回应流量亦要经历该过程。为了实现上述功能，并且确保手机业务流量在DCN网络内部可以实现负载均衡，则需要在DCN网络内部部署NFVI分布式网关功能。"
+  },
+  {
+    "query": "配置子接口MAC地址的目的是什么？",
+    "ground_truth": "配置子接口的MAC地址，使设备学习到正确的MAC地址与PVC的绑定关系，实现不同的PVC承载不同的业务。"
+  },
+  {
+    "query": "ERPSv2相比ERPSv1增加了哪些功能？",
+    "ground_truth": "v2版本完全兼容v1版本，并在v1版本的基础上进行了功能扩展。支持创建多环，可以配置主环和子环。在支持配置RPL owner和普通端口基础上，还支持配置RPL neighbour端口。支持网络拓扑变化通告功能。支持子环传输R-APS报文采用虚通道或非虚通道。支持配置为回切模式或非回切模式。支持阻塞点人工切换功能，且支持强制切换和手工切换。"
+  },
+  {
+    "query": "如何配置MAC地址学习限制功能来提升VXLAN网络的安全性？",
+    "ground_truth": "为了控制接入用户数量或防止MAC地址表受攻击，可以限制设备允许学习的MAC地址数量，从而控制接入用户数量，当超过限制数量时不再学习MAC地址，同时可以配置丢弃报文动作，防止MAC地址攻击，提高网络安全性。操作步骤：执行命令system-view，进入系统视图。执行命令bridge-domain bd-id，进入BD视图。执行命令mac-limit { action { discard | forward } | maximum max [ rate interval ] } *，配置MAC地址学习限制规则。"
+  },
+  {
+    "query": "QinQ的二层灵活QinQ与QinQ二层隧道的主要区别是什么？",
+    "ground_truth": "QinQ二层隧道：对进入二层QinQ接口的所有帧都加上相同的外层Tag。二层灵活QinQ：对进入二层QinQ接口的帧，可以根据不同的内层Tag而加上不同的外层Tag，对于用户VLAN的划分更加细致。"
+  },
+  {
+    "query": "VXLAN的三段式VXLAN实现数据中心互联有什么价值？",
+    "ground_truth": "通过三段式VXLAN实现数据中心三层互联，可以为用户带来的价值包括：实现跨数据中心主机之间的三层互联。各数据中心的协议独立，即不同数据中心不需要运行相同的协议。不同数据中心之间不需要协同信息。"
+  },
+  {
+    "query": "以太网自动协商的目的是什么？",
+    "ground_truth": "随着技术的发展，出现了全双工，接着又出现了100M，以太网的性能大大改善。但是随之而来的问题是：如何保证原有以太网络和新以太网的兼容？于是，提出了自动协商技术来解决这种矛盾。自动协商的主要功能就是使物理链路两端的设备通过交互信息自动选择同样的工作参数。自动协商的内容主要包括双工模式、运行速率以及流控等参数。一旦协商通过，链路两端的设备就锁定在同样的双工模式和运行速率。"
+  },
+  {
+    "query": "MSTP多进程解决了什么问题？",
+    "ground_truth": "如图1-295所示，设备和UPE组成多个二层环路，因此需要在此环路上启用生成树协议来防止环路。UPE1和UPE2同时连接多个接入环，各个环之间互相独立，不需要互通，这样在启动生成树协议时就不能将所有设备构成的环路计算成一个大生成树，这就需要在各个设备构成的环上启用独立的生成树协议进行计算，且互不影响。为了解决上述问题，引入了MSTP多进程。"
+  },
+  {
+    "query": "VXLAN隧道由什么确定？",
+    "ground_truth": "VXLAN隧道由一对VTEP IP地址确定。静态VXLAN隧道的创建完全通过手工配置本端和远端的VNI、VTEP IP地址和头端复制列表来完成，只要VXLAN隧道的两端VTEP IP是三层路由可达的，VXLAN隧道就可以建立成功。"
+  },
+  {
+    "query": "ERPS的Guard Timer有什么作用？",
+    "ground_truth": "链路故障或节点故障所涉及到的设备在故障恢复或执行清除操作后，向其他设备发送NR R-APS（No Request Ring Auto Protection Switching）报文，并同时启动Guard Timer，在该定时器超时前不处理R-APS报文，目的是防止收到过期的SF R-APS报文。如果定时器超时后还能收到其他端口发送的SF R-APS报文，则本端口的转发状态变为Forwarding状态。"
+  },
+  {
+    "query": "VLANIF接口是什么？",
+    "ground_truth": "VLANIF接口是三层逻辑接口，可以部署在三层交换机上，也可以部署在路由器上。三层交换技术是将路由技术与交换技术合二为一的技术，在交换机内部实现了路由，提高了网络的整体性能。为了保证第一次数据流通过路由表正常转发，路由表中必须有正确的路由表项。因此必须在三层交换机上部署三层接口并部署路由协议，实现三层路由可达。VLANIF接口由此而产生。"
+  },
+  {
+    "query": "Port Switch命令的作用是什么？",
+    "ground_truth": "执行命令portswitch，将端口切换为二层端口。如果在其他接口上已经配置了借用Ethernet接口、GE接口、Eth-Trunk接口的IP地址，则对应的Ethernet接口、GE接口、Eth-Trunk接口上不能执行portswitch命令。如果Ethernet接口、GE接口、Eth-Trunk接口下有任何三层的配置存在，该命令都不能执行成功。请先将接口下的三层配置全部清除，然后再执行portswitch命令。"
+  },
+  {
+    "query": "QinQ的VLAN Swap功能是什么？",
+    "ground_truth": "配置基于QinQ的VLAN Swap，使得对带有二层Tag的数据报文进行内、外层Tag交换。VLAN Swap功能只对带有两层Tag的报文进行内、外层交换，不影响带一层Tag的报文。"
+  },
+  {
+    "query": "VXLAN中头端复制是什么？",
+    "ground_truth": "头端是指VXLAN隧道的入节点，复制是指当VXLAN隧道的入节点收到一份BUM（Broadcast&Unknown-unicast&Multicast）报文后，需要将其复制多份并发送给列表中的所有VTEP。头端复制列表就是用于指导VXLAN隧道的入节点进行BUM报文复制和发送的远端VTEP的IP地址列表。"
+  },
+  {
+    "query": "禁止VLAN内的MAC地址学习功能适用于什么场景？",
+    "ground_truth": "禁止VLAN内的MAC地址学习功能只适用于设备上只有一个入接口和出接口或网络环境固定的应用场景。当设备上只有一个入接口和出接口或网络环境固定的情况下，为了节约MAC地址表项，可禁止VLAN内的MAC地址学习功能。"
+  },
+  {
+    "query": "STP中根桥是如何选举的？",
+    "ground_truth": "根桥就是网桥ID最小的桥，通过交互配置BPDU协议报文选出最小的BID。网络中所有的设备使能STP协议后，每一台设备都认为自己是根桥。所有设备通过交换配置BPDU后，进行选举工作，选出根桥。"
+  },
+  {
+    "query": "RSTP对STP的主要改进是什么？",
+    "ground_truth": "根据STP的不足，RSTP删除了3种端口状态，新增加了2种端口角色，并且把端口属性充分的按照状态和角色解耦，使得可以更加精确的描述端口，从而使得初学者更易学习协议，同时支持拓扑快速收敛。"
+  },
+  {
+    "query": "BPDU保护功能的作用是什么？",
+    "ground_truth": "边缘端口直接和用户终端相连，正常情况下，边缘端口不会收到BPDU报文。如果攻击者伪造BPDU恶意攻击设备，当边缘端口接收到BPDU报文时，设备会自动将边缘端口设置为非边缘端口，并重新进行生成树计算，从而引起网络震荡。通过使能BPDU保护可以防止伪造BPDU恶意攻击。"
+  },
+  {
+    "query": "QinQ终结子接口接入VPLS的对称方式和非对称方式有什么区别？",
+    "ground_truth": "对称方式：指QinQ终结子接口接入L2VPN时，公网两端边缘设备收到的报文中的内层Tag必须一致。MAC地址学习只针对外层Tag。非对称方式：指QinQ终结子接口接入L2VPN时，公网两端边缘设备收到的报文中的内层Tag可以不一致。用户可以随意规划自己的VLAN，任何站点任何VLAN的用户可以互访。MAC地址学习针对内外层Tag。"
+  }
+]

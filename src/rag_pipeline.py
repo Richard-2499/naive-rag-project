@@ -1,10 +1,10 @@
-import logging
-
 from config.config_loader import load_config
 from src.generation import Generation
 from src.reranker.base_reranker import BaseReranker
 from src.retriever.hybrid_retriever import HybridRetriever
-from src.schema.retrieval_result import RetrievalResult
+from src.schemas.retrieval_result import RetrievalResult
+
+from src.schemas.rag_response_result import RAGResponse
 
 config = load_config()
 from src.logger import get_logger, get_log_level
@@ -18,19 +18,25 @@ class RAGPipeline:
         self._generation = generation
         self._reranker = reranker
 
-    def query(self, query: str) -> str:
+    def query(self, query: str):
         candidates = self._retriever.retrieve(query, top_k=config["retrieval"]["hybrid"]["candidate_k"])
-        logger.debug(
-            "Hybrid retrieval:\n%s",
-            self.format_retrieval_results(candidates)
-        )
+        # logger.debug(
+        #     "Hybrid retrieval:\n%s",
+        #     self.format_retrieval_results(candidates)
+        # )
+
         reranked_results = self._reranker.rerank(query = query, results = candidates, top_k = config["retrieval"]["hybrid"]["top_k"])
-        logger.debug(
-            "Reranker results: \n%s",
-            self.format_retrieval_results(reranked_results)
-        )
+        # logger.debug(
+        #     "Reranker results: \n%s",
+        #     self.format_retrieval_results(reranked_results)
+        # )
         answer = self._generation.generate(query, reranked_results)
-        return answer
+        return RAGResponse(
+            query = query,
+            answer = answer,
+            context = [node.text for node in reranked_results]
+        )
+
     @staticmethod
     def format_retrieval_results(results: list[RetrievalResult]):
         lines = []

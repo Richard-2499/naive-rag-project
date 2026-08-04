@@ -1,7 +1,7 @@
 from llama_index.core.schema import TextNode
 from openai import OpenAI
 
-from src.schema.retrieval_result import RetrievalResult
+from src.schemas.retrieval_result import RetrievalResult
 
 
 class LLMClient:
@@ -81,6 +81,7 @@ class Generation:
         生成答案
         Args:
             query: 用户提问
+            nodes: 相关文档
         Returns:
             str: 生成的答案
         """

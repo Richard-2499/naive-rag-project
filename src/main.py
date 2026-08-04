@@ -76,7 +76,7 @@ def main():
     )
 
     # 7. 用户问题
-    query = "vxlan 中数据包转发流程"
+    query = "VXLAN控制平面与报文转发"
 
     answer = pipeline.query(query)
     time.sleep(3)

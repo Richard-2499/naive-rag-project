@@ -1,0 +1,46 @@
+[
+  {
+    "query": "静态黑洞MAC表项有什么作用？",
+    "ground_truth": "配置静态黑洞MAC表项，丢弃目的MAC为特定值的报文，可以防止黑客通过MAC地址攻击网络。为了防止无用的MAC地址表项（例如非法用户的MAC地址表项）占用MAC表，也为了防止黑客通过MAC地址攻击用户设备或网络，可将非信任用户的MAC地址配置为静态黑洞MAC，丢弃目的MAC为这些非信任MAC地址的报文。"
+  },
+  {
+    "query": "如何配置基于VLAN的MAC地址学习限制？",
+    "ground_truth": "步骤1 执行命令system-view，进入系统视图。步骤2 执行命令vlan vlan-id，进入VLAN视图。步骤3 执行命令mac-limit { action { discard | forward } | alarm { disable | enable } | maximum maxValue [ rate interval ] }，配置MAC地址学习限制规则。步骤4 （可选）执行命令mac-limit up-threshold up-threshold down-threshold down-threshold，配置MAC地址数量告警产生和消除的阈值百分比。步骤5 执行命令commit，提交配置。"
+  },
+  {
+    "query": "禁止MAC地址学习功能的应用场景是什么？",
+    "ground_truth": "如图1-3所示，CE上某固定接口与服务器相连，网络管理员为了提高设备的安全性，可以指定该接口只允许某些MAC地址的报文通过。可在该接口上配置该服务器的静态MAC地址，且关闭该接口的MAC地址学习功能，指定动作为丢弃。这样，其他服务器或终端将无法通过该接口通信，增强网络的稳定性和安全性。"
+  },
+  {
+    "query": "MSTP相比RSTP有什么优势？",
+    "ground_truth": "MSTP在STP基础上进行了改进，实现了网络拓扑快速收敛。但RSTP和STP还存在同一个缺陷：由于局域网内所有的VLAN共享一棵生成树，因此无法在VLAN间实现数据流量的负载均衡，链路被阻塞后将不承载任何流量，造成带宽浪费。MSTP兼容STP和RSTP，既可以快速收敛，又提供了数据转发的多个冗余路径，在数据转发过程中实现VLAN数据的负载均衡。"
+  },
+  {
+    "query": "什么是MST域？",
+    "ground_truth": "MST域是多生成树域（Multiple Spanning Tree Region），由交换网络中的多台设备以及它们之间的网段所构成。同一个MST域的设备具有下列特点：都启动了MSTP。具有相同的域名。具有相同的VLAN到生成树实例映射配置。具有相同的MSTP修订级别配置。"
+  },
+  {
+    "query": "RRPP是什么？",
+    "ground_truth": "快速环网保护协议（Rapid Ring Protection Protocol，以下简称RRPP）是一个专门用于破除以太网数据环路的链路层(二层)协议。运行该协议的设备通过RRPP报文检测网络中是否存在环路，并适时对某些接口进行阻塞以消除环路。RRPP Snooping是将RRPP环路变化通知到VPLS（Virtual Private LAN Service）网络的技术。"
+  },
+  {
+    "query": "BPDU Tunnel的目的是什么？",
+    "ground_truth": "如图1-340所示，用户网络1和用户网络2共同运行MSTP协议，要求用户网络1的BPDU报文能够透传运营商网络到达用户网络2，完成生成树计算。BPDU Tunnel的提出解决了上述问题，通过BPDU Tunnel使得不同用户网络的分支通过运营商网络的BPDU Tunnel透明传输各自的BPDU报文。"
+  },
+  {
+    "query": "VXLAN双活场景中的Anycast VTEP地址有什么作用？",
+    "ground_truth": "在数据中心与企业Site互通的场景中，VPN GW（PE1和PE2）与企业Site（CPE）通过VXLAN互联。PE1和PE2对网络侧使用一个虚地址作为NVE接口的地址，即Anycast VTEP地址，这样从CPE侧只感知到一个远端的NVE接口，并与该虚地址建立VXLAN隧道。"
+  },
+  {
+    "query": "VXLAN的三段式VXLAN实现数据中心互联有什么价值？",
+    "ground_truth": "通过三段式VXLAN实现数据中心三层互联，可以为用户带来的价值包括：实现跨数据中心主机之间的三层互联。各数据中心的协议独立，即不同数据中心不需要运行相同的协议。不同数据中心之间不需要协同信息。"
+  },
+  {
+    "query": "VXLAN中头端复制是什么？",
+    "ground_truth": "头端是指VXLAN隧道的入节点，复制是指当VXLAN隧道的入节点收到一份BUM（Broadcast&Unknown-unicast&Multicast）报文后，需要将其复制多份并发送给列表中的所有VTEP。头端复制列表就是用于指导VXLAN隧道的入节点进行BUM报文复制和发送的远端VTEP的IP地址列表。"
+  },
+  {
+    "query": "禁止VLAN内的MAC地址学习功能适用于什么场景？",
+    "ground_truth": "禁止VLAN内的MAC地址学习功能只适用于设备上只有一个入接口和出接口或网络环境固定的应用场景。当设备上只有一个入接口和出接口或网络环境固定的情况下，为了节约MAC地址表项，可禁止VLAN内的MAC地址学习功能。"
+  }
+]

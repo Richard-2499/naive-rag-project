@@ -1,5 +1,5 @@
 from src.store.bm25_store import BM25Store
-from src.schema.retrieval_result import RetrievalResult
+from src.schemas.retrieval_result import RetrievalResult
 
 
 class BM25Retriever:

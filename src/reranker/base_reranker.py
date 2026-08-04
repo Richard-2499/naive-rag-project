@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.schema.retrieval_result import RetrievalResult
+from src.schemas.retrieval_result import RetrievalResult
 
 class BaseReranker(ABC):
     """
